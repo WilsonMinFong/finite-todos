@@ -1,6 +1,5 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import '../models/todo.dart';
 
 class DatabaseHelper {
   // Singleton pattern - private constructor
@@ -41,36 +40,20 @@ class DatabaseHelper {
     ''');
   }
   
-  Future<int> insertTodo(Todo todo) async {
+  Future<int> insertItem(String tableName, Map<String, Object?> itemMap) async {
     final db = await database;
+
     return await db.insert(
-      'todos',
-      todo.toMap(),
+      tableName,
+      itemMap,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
   
-  Future<List<Todo>> getTodos() async {
+  Future<List<Map<String, dynamic>>> getItemMaps(String tableName) async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('todos');
-    
-    return List.generate(maps.length, (i) {
-      return Todo.fromMap(maps[i]);
-    });
-  }
-  
-  Future<Todo?> getTodo(int id) async {
-    final db = await database;
-    final maps = await db.query(
-      'todos',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-    
-    if (maps.isNotEmpty) {
-      return Todo.fromMap(maps.first);
-    }
-    return null;
+
+    return await db.query(tableName);
   }
 
   // Close the database
