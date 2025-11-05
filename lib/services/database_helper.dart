@@ -36,7 +36,8 @@ class DatabaseHelper {
       CREATE TABLE todos(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         description TEXT NOT NULL,
-        created_at INTEGER NOT NULL
+        created_at INTEGER NOT NULL,
+        completed_at INTEGER
       )
     ''');
   }
@@ -55,6 +56,17 @@ class DatabaseHelper {
     final db = await database;
 
     return await db.query(tableName);
+  }
+
+  Future<int> updateItem(String tableName, Map<String, Object?> itemMap) async {
+    final db = await database;
+
+    return await db.update(
+      tableName,
+      itemMap,
+      where: 'id = ?',
+      whereArgs: [itemMap['id']]
+    );
   }
 
   // Close the database

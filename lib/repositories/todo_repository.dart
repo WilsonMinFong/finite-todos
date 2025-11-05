@@ -21,4 +21,8 @@ class TodoRepository {
 
     await _dbHelper.insertItem(tableName, todo.toMap());
   }
+
+  Future<void> updateTodo(Todo todo) async {
+    await _dbHelper.updateItem(tableName, todo.toMap());
+  }
 }

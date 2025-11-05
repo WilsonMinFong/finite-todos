@@ -35,8 +35,15 @@ class _MyHomePageState extends State<MyHomePage> {
     _loadTodos();
   }
 
+  void _toggleCompleteTodo(Todo todo) {
+    _todoRepository.updateTodo(todo.toggleComplete());
+    _loadTodos();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final uncompletedTodos = _todos.where((todo) => todo.completedAt != null);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -54,15 +61,19 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ListView.builder(
                 itemCount: _todos.length,
                 itemBuilder: (context, index) {
+                  final todo = _todos[index];
+
                   return ListTile(
-                    title: Text('${_todos[index].description} (createdAt: ${_todos[index].createdAt})'),
+                    leading: Checkbox(value: todo.completedAt != null, onChanged: (bool? value) { _toggleCompleteTodo(todo); }),
+                    title: Text(todo.description),
+                    subtitle: Text(todo.createdAt.toString())
                   );
                 },
               ),
             ),
             Align(
               alignment: Alignment.center,
-              child: Text('You have ${_todos.length} todos left.'),
+              child: Text('You have ${uncompletedTodos.length} todos left.'),
             ),
           ],
         ),
