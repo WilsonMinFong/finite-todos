@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../repositories/todo_repository.dart';
+import '../models/todo.dart';
 import '../widgets/new_todo_form.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -11,12 +13,26 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<String> _todos = [];
+  final _todoRepository = TodoRepository();
+  List<Todo> _todos = [];
 
-  void _addTodo(item) {
+  @override
+  void initState() {
+    super.initState();
+    _loadTodos();
+  }
+
+  Future<void> _loadTodos() async {
+    final todos = await _todoRepository.getAllTodos();
+
     setState(() {
-      _todos.add(item);
+      _todos = todos;
     });
+  }
+
+  void _addTodo(String description) {
+    _todoRepository.addTodo(description);
+    _loadTodos();
   }
 
   @override
@@ -39,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemCount: _todos.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(_todos[index]),
+                    title: Text(_todos[index].description),
                   );
                 },
               ),

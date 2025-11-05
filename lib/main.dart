@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
+import 'services/database_helper.dart';
 
-void main() {
+void main() async {
+  // Avoid errors caused by flutter upgrade.
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await DatabaseHelper.instance.database;
+
   runApp(const MyApp());
 }
 
