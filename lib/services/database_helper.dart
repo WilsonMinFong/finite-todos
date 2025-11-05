@@ -35,7 +35,8 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE todos(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        description TEXT NOT NULL
+        description TEXT NOT NULL,
+        created_at INTEGER NOT NULL
       )
     ''');
   }

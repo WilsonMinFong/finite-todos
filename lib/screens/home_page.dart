@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemCount: _todos.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(_todos[index].description),
+                    title: Text('${_todos[index].description} (createdAt: ${_todos[index].createdAt})'),
                   );
                 },
               ),

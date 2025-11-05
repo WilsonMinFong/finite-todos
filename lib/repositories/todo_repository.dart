@@ -14,7 +14,11 @@ class TodoRepository {
   }
 
   Future<void> addTodo(String description) async {
-    final todo = Todo(description: description);
+    final todo = Todo(
+      description: description,
+      createdAt: DateTime.now()
+    );
+
     await _dbHelper.insertItem(tableName, todo.toMap());
   }
 }
