@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/home_page.dart';
+import 'screens/inbox_page.dart';
 import 'services/database_helper.dart';
 
 void main() async {
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Finite Todos'),
+      home: const InboxPage(),
     );
   }
 }

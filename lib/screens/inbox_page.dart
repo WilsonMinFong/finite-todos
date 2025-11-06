@@ -1,18 +1,17 @@
+import 'package:finite_todos/screens/done_today_page.dart';
 import 'package:flutter/material.dart';
 import '../repositories/todo_repository.dart';
 import '../models/todo.dart';
 import '../widgets/new_todo_form.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class InboxPage extends StatefulWidget {
+  const InboxPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<InboxPage> createState() => _InboxPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _InboxPageState extends State<InboxPage> {
   final _todoRepository = TodoRepository();
   List<Todo> _todos = [];
 
@@ -23,7 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _loadTodos() async {
-    final todos = await _todoRepository.getAllTodos();
+    final todos = await _todoRepository.getUncompletedTodos();
 
     setState(() {
       _todos = todos;
@@ -42,12 +41,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final uncompletedTodos = _todos.where((todo) => todo.completedAt != null);
+    final uncompletedTodos = _todos.where((todo) => todo.completedAt == null);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text('Inbox'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.navigate_next),
+            tooltip: 'Go to Done Today',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (context) => const DoneTodayPage()
+                )
+              );
+            }
+          )
+        ]
       ),
       body: Center(
         child: Column(

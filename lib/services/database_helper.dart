@@ -52,10 +52,21 @@ class DatabaseHelper {
     );
   }
   
-  Future<List<Map<String, dynamic>>> getItemMaps(String tableName) async {
+  Future<List<Map<String, dynamic>>> getItemMaps(
+    String tableName, {
+      String? where,
+      List? whereArgs,
+      String? orderBy
+    }
+  ) async {
     final db = await database;
 
-    return await db.query(tableName);
+    return await db.query(
+      tableName,
+      where: where,
+      whereArgs: whereArgs,
+      orderBy: orderBy
+    );
   }
 
   Future<int> updateItem(String tableName, Map<String, Object?> itemMap) async {

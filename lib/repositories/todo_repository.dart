@@ -8,9 +8,34 @@ class TodoRepository {
   Future<List<Todo>> getAllTodos() async {
     final itemMaps = await _dbHelper.getItemMaps(tableName);
 
-    return List.generate(itemMaps.length, (i) {
-      return Todo.fromMap(itemMaps[i]);
-    });
+    return itemMaps.map((map) => Todo.fromMap(map)).toList();
+  }
+
+  Future<List<Todo>> getUncompletedTodos() async {
+    final itemMaps = await _dbHelper.getItemMaps(
+      tableName,
+      where: 'completed_at IS NULL'
+    );
+
+    return itemMaps.map((map) => Todo.fromMap(map)).toList();
+  }
+
+  Future<List<Todo>> getTodosCompletedToday() async {
+    final now = DateTime.now();
+    final startOfToday = DateTime(now.year, now.month, now.day);
+    final startOfTomorrow = startOfToday.add(Duration(days: 1));
+
+    final itemMaps = await _dbHelper.getItemMaps(
+      tableName,
+      where: 'completed_at >= ? AND completed_at < ?',
+      whereArgs: [
+        startOfToday.millisecondsSinceEpoch,
+        startOfTomorrow.millisecondsSinceEpoch,
+      ],
+      orderBy: 'completed_at DESC',
+    );
+
+    return itemMaps.map((map) => Todo.fromMap(map)).toList();
   }
 
   Future<void> addTodo(String description) async {
