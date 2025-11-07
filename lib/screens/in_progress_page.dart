@@ -37,14 +37,7 @@ class _InProgressPageState extends State<InProgressPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('In Progress'),
-        leading: IconButton(
-          icon: const Icon(Icons.navigate_before),
-          tooltip: 'Back to Inbox',
-          onPressed: () {
-            Navigator.pop(context);
-          }
-        )
+        title: Text('In Progress')
       ),
       body: Center(
         child: Column(

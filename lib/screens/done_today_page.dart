@@ -32,14 +32,7 @@ class _DoneTodayPageState extends State<DoneTodayPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Done Today'),
-        leading: IconButton(
-          icon: const Icon(Icons.navigate_before),
-          tooltip: 'Back to Inbox',
-          onPressed: () {
-            Navigator.pop(context);
-          }
-        )
+        title: Text('Done Today')
       ),
       body: Center(
         child: Column(

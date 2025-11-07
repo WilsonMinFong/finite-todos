@@ -1,5 +1,3 @@
-import 'package:finite_todos/screens/done_today_page.dart';
-import 'package:finite_todos/screens/in_progress_page.dart';
 import 'package:flutter/material.dart';
 import '../repositories/todo_repository.dart';
 import '../models/todo.dart';
@@ -52,21 +50,7 @@ class _InboxPageState extends State<InboxPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Inbox'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.navigate_next),
-            tooltip: 'Go to Done Today',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (context) => const DoneTodayPage()
-                )
-              );
-            }
-          )
-        ]
+        title: Text('Inbox')
       ),
       body: Center(
         child: Column(
