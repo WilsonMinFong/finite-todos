@@ -7,6 +7,7 @@ class Todo {
 
   // TODO: Make this number configurable
   static const int maxNumInProgress = 4;
+  static const int expireMinutes = 7 * 24 * 60;
 
   Todo({
     this.id,
@@ -37,6 +38,16 @@ class Todo {
       completedAt: completedAt != this.completedAt ? completedAt : this.completedAt,
       inProgress: inProgress ?? this.inProgress,
     );
+  }
+
+  DateTime get expiresAt {
+    return createdAt.add(Duration(minutes: expireMinutes));
+  }
+
+  bool get isExpired {
+    return DateTime.now().isAfter(expiresAt) &&
+           completedAt == null &&
+           !inProgress;
   }
 
   Map<String, Object?> toMap() {

@@ -81,6 +81,12 @@ class DatabaseHelper {
     );
   }
 
+  Future<int>deleteWhere(String tableName, {String? where, List? whereArgs}) async {
+    final db = await database;
+
+    return await db.delete(tableName, where: where, whereArgs: whereArgs);
+  }
+
   // Close the database
   Future<void> close() async {
     final db = await database;

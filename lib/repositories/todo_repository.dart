@@ -17,7 +17,9 @@ class TodoRepository {
       where: 'completed_at IS NULL AND in_progress IS FALSE'
     );
 
-    return itemMaps.map((map) => Todo.fromMap(map)).toList();
+    return itemMaps.map((map) => Todo.fromMap(map))
+                   .where((todo) => !todo.isExpired)
+                   .toList();
   }
 
   Future<List<Todo>> getTodosCompletedToday() async {
@@ -59,5 +61,15 @@ class TodoRepository {
 
   Future<void> updateTodo(Todo todo) async {
     await _dbHelper.updateItem(tableName, todo.toMap());
+  }
+
+  Future<void> deleteExpiredTodos() async {
+    final cutoff = DateTime.now().subtract(Duration(minutes: Todo.expireMinutes));
+
+    await _dbHelper.deleteWhere(
+      tableName,
+      where: 'created_at < ? AND completed_at IS NULL AND in_progress IS FALSE',
+      whereArgs: [cutoff.millisecondsSinceEpoch],
+    );
   }
 }

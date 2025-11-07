@@ -1,3 +1,4 @@
+import 'package:finite_todos/repositories/todo_repository.dart';
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
 import 'services/database_helper.dart';
@@ -7,6 +8,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await DatabaseHelper.instance.database;
+
+  TodoRepository().deleteExpiredTodos();
 
   runApp(const MyApp());
 }

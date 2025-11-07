@@ -69,7 +69,7 @@ class _InboxPageState extends State<InboxPage> {
                   return ListTile(
                     leading: Checkbox(value: todo.completedAt != null, onChanged: (bool? value) { _toggleCompleteTodo(todo); }),
                     title: Text(todo.description),
-                    subtitle: Text(todo.createdAt.toString()),
+                    subtitle: Text('Expires at: ${todo.expiresAt.toString()}'),
                     trailing: IconButton(
                       icon: const Icon(Icons.play_arrow_outlined),
                       onPressed: () { _markTodoInProgress(todo); }

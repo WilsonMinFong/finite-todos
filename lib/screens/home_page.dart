@@ -32,8 +32,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Today'
           ),
           NavigationDestination(
-            icon: Icon(Icons.sync_outlined),
-            selectedIcon: Icon(Icons.sync),
+            icon: Icon(Icons.autorenew_outlined),
+            selectedIcon: Icon(Icons.autorenew),
             label: 'In-Progress'
           ),
           NavigationDestination(
