@@ -11,10 +11,10 @@ class TodoRepository {
     return itemMaps.map((map) => Todo.fromMap(map)).toList();
   }
 
-  Future<List<Todo>> getUncompletedTodos() async {
+  Future<List<Todo>> getInboxTodos() async {
     final itemMaps = await _dbHelper.getItemMaps(
       tableName,
-      where: 'completed_at IS NULL'
+      where: 'completed_at IS NULL AND in_progress IS FALSE'
     );
 
     return itemMaps.map((map) => Todo.fromMap(map)).toList();
@@ -38,10 +38,20 @@ class TodoRepository {
     return itemMaps.map((map) => Todo.fromMap(map)).toList();
   }
 
+  Future<List<Todo>> getInProgressTodos() async {
+    final itemMaps = await _dbHelper.getItemMaps(
+      tableName,
+      where: 'in_progress IS TRUE'
+    );
+
+    return itemMaps.map((map) => Todo.fromMap(map)).toList();
+  }
+
   Future<void> addTodo(String description) async {
     final todo = Todo(
       description: description,
-      createdAt: DateTime.now()
+      createdAt: DateTime.now(),
+      inProgress: false
     );
 
     await _dbHelper.insertItem(tableName, todo.toMap());

@@ -37,7 +37,8 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         description TEXT NOT NULL,
         created_at INTEGER NOT NULL,
-        completed_at INTEGER
+        completed_at INTEGER,
+        in_progress BOOLEAN NOT NULL DEFAULT FALSE
       )
     ''');
   }

@@ -58,7 +58,7 @@ class _DoneTodayPageState extends State<DoneTodayPage> {
                   return ListTile(
                     leading: Checkbox(value: todo.completedAt != null, onChanged: (bool? value) { }),
                     title: Text(todo.description),
-                    subtitle: Text(todo.createdAt.toString())
+                    subtitle: Text(todo.completedAt.toString())
                   );
                 },
               ),

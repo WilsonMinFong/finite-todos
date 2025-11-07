@@ -1,4 +1,5 @@
 import 'package:finite_todos/screens/done_today_page.dart';
+import 'package:finite_todos/screens/in_progress_page.dart';
 import 'package:flutter/material.dart';
 import '../repositories/todo_repository.dart';
 import '../models/todo.dart';
@@ -22,7 +23,7 @@ class _InboxPageState extends State<InboxPage> {
   }
 
   Future<void> _loadTodos() async {
-    final todos = await _todoRepository.getUncompletedTodos();
+    final todos = await _todoRepository.getInboxTodos();
 
     setState(() {
       _todos = todos;
@@ -36,6 +37,11 @@ class _InboxPageState extends State<InboxPage> {
 
   void _toggleCompleteTodo(Todo todo) {
     _todoRepository.updateTodo(todo.toggleComplete());
+    _loadTodos();
+  }
+
+  void _markTodoInProgress(Todo todo) {
+    _todoRepository.updateTodo(todo.markInProgress());
     _loadTodos();
   }
 
@@ -79,7 +85,11 @@ class _InboxPageState extends State<InboxPage> {
                   return ListTile(
                     leading: Checkbox(value: todo.completedAt != null, onChanged: (bool? value) { _toggleCompleteTodo(todo); }),
                     title: Text(todo.description),
-                    subtitle: Text(todo.createdAt.toString())
+                    subtitle: Text(todo.createdAt.toString()),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.play_arrow_outlined),
+                      onPressed: () { _markTodoInProgress(todo); }
+                    )
                   );
                 },
               ),

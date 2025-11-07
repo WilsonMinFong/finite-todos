@@ -3,30 +3,39 @@ class Todo {
   final String description;
   final DateTime createdAt;
   final DateTime? completedAt;
+  final bool inProgress;
 
+  // TODO: Make this number configurable
+  static const int maxNumInProgress = 4;
 
   Todo({
     this.id,
     required this.description,
     required this.createdAt,
-    this.completedAt
+    this.completedAt,
+    required this.inProgress
   });
 
   Todo toggleComplete() {
     return copyWith(
-      id: id,
-      description: description,
-      createdAt: createdAt,
-      completedAt: completedAt == null ? DateTime.now() : null
+      completedAt: completedAt == null ? DateTime.now() : null,
+      inProgress: false
     );
   }
 
-  Todo copyWith({int? id, String? description, DateTime? createdAt, DateTime? completedAt}) {
+  Todo markInProgress() {
+    return copyWith(
+      inProgress: true
+    );
+  }
+
+  Todo copyWith({int? id, String? description, DateTime? createdAt, DateTime? completedAt, bool? inProgress}) {
     return Todo(
       id: id ?? this.id,
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,
       completedAt: completedAt != this.completedAt ? completedAt : this.completedAt,
+      inProgress: inProgress ?? this.inProgress,
     );
   }
 
@@ -35,7 +44,8 @@ class Todo {
       'id': id,
       'description': description,
       'created_at': createdAt.millisecondsSinceEpoch,
-      'completed_at': completedAt?.millisecondsSinceEpoch
+      'completed_at': completedAt?.millisecondsSinceEpoch,
+      'in_progress': inProgress
     };
   }
 
@@ -44,7 +54,8 @@ class Todo {
       id: map['id'] as int,
       description: map['description'] as String,
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['created_at']),
-      completedAt: map['completed_at'] != null ? DateTime.fromMillisecondsSinceEpoch(map['completed_at']) : null
+      completedAt: map['completed_at'] != null ? DateTime.fromMillisecondsSinceEpoch(map['completed_at']) : null,
+      inProgress: map['in_progress'] == 1
     );
   }
 
