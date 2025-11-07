@@ -39,7 +39,7 @@ class _InboxPageState extends State<InboxPage> {
   }
 
   void _markTodoInProgress(Todo todo) {
-    _todoRepository.updateTodo(todo.markInProgress());
+    _todoRepository.updateTodo(todo.toggleInProgress());
     _loadTodos();
   }
 

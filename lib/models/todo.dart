@@ -24,9 +24,9 @@ class Todo {
     );
   }
 
-  Todo markInProgress() {
+  Todo toggleInProgress() {
     return copyWith(
-      inProgress: true
+      inProgress: !inProgress
     );
   }
 

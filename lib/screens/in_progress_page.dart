@@ -32,6 +32,11 @@ class _InProgressPageState extends State<InProgressPage> {
     _loadInProgressTodos();
   }
 
+  Future<void> _toggleInProgress(Todo todo) async {
+    _todoRepository.updateTodo(todo.toggleInProgress());
+    _loadInProgressTodos();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +64,11 @@ class _InProgressPageState extends State<InProgressPage> {
 
                   return ListTile(
                     leading: Checkbox(value: todo.completedAt != null, onChanged: (bool? value) { _toggleCompleteTodo(todo); }),
-                    title: Text(todo.description)
+                    title: Text(todo.description),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.inbox),
+                      onPressed: () { _toggleInProgress(todo); }
+                    )
                   );
                 },
               ),
