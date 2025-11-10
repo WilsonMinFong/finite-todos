@@ -47,14 +47,9 @@ class _InboxPageState extends State<InboxPage> {
   Widget build(BuildContext context) {
     final uncompletedTodos = _todos.where((todo) => todo.completedAt == null);
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Inbox')
-      ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -84,7 +79,6 @@ class _InboxPageState extends State<InboxPage> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }

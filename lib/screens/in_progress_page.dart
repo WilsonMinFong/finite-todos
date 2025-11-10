@@ -39,22 +39,17 @@ class _InProgressPageState extends State<InProgressPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('In Progress')
-      ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Align(
-              alignment: Alignment.center,
-              child: Text('${_inProgressTodos.length} in-progress todos (max: ${Todo.maxNumInProgress})'),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: LinearProgressIndicator(value: _inProgressTodos.length / Todo.maxNumInProgress)
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Align(
+            alignment: Alignment.center,
+            child: Text('${_inProgressTodos.length} in-progress todos (max: ${Todo.maxNumInProgress})'),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: LinearProgressIndicator(value: _inProgressTodos.length / Todo.maxNumInProgress)
             ),
             Expanded(
               child: ListView.builder(
@@ -75,7 +70,6 @@ class _InProgressPageState extends State<InProgressPage> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }

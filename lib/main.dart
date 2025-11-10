@@ -22,9 +22,25 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Finite Todos',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF13EC5B),
+          brightness: Brightness.light,
+        ).copyWith(
+          surface: const Color(0xFFF6F8F6),
+        ),
+        fontFamily: 'Manrope',
+        useMaterial3: true,
+      ),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF13EC5B),
+          brightness: Brightness.dark,
+        ).copyWith(
+          surface: const Color(0xFF102216),
+        ),
         fontFamily: 'Manrope',
       ),
+      themeMode: ThemeMode.system,
       home: HomePage(),
     );
   }
