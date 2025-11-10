@@ -33,7 +33,59 @@ class _DoneTodayPageState extends State<DoneTodayPage> {
         children: <Widget>[
           Align(
             alignment: Alignment.center,
-            child: Text('Completed ${_todosCompletedToday.length} todos today'),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(
+                'Done Today 🎉',
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(16.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.1),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.local_fire_department,
+                    size: 32,
+                    color: Colors.orange,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '${_todosCompletedToday.length}',
+                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Tasks Completed',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
             Expanded(
               child: ListView.builder(
@@ -43,8 +95,13 @@ class _DoneTodayPageState extends State<DoneTodayPage> {
 
                   return ListTile(
                     leading: Checkbox(value: todo.completedAt != null, onChanged: (bool? value) { }),
-                    title: Text(todo.description),
-                    subtitle: Text(todo.completedAt.toString())
+                    title: Text(
+                      todo.description,
+                      style: TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        color: Colors.grey[600],
+                      ),
+                    ),
                   );
                 },
               ),
