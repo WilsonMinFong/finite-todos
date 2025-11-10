@@ -43,33 +43,70 @@ class _InProgressPageState extends State<InProgressPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Align(
-            alignment: Alignment.center,
-            child: Text('${_inProgressTodos.length} in-progress todos (max: ${Todo.maxNumInProgress})'),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Focus Capacity',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                  ),
+                ),
+                Text(
+                  '${_inProgressTodos.length} / ${Todo.maxNumInProgress}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                  ),
+                ),
+              ],
+            ),
           ),
+          SizedBox(height: 8),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: LinearProgressIndicator(value: _inProgressTodos.length / Todo.maxNumInProgress)
+            child: LinearProgressIndicator(
+              value: _inProgressTodos.length / Todo.maxNumInProgress,
+              minHeight: 8,
+              borderRadius: BorderRadius.circular(4),
+              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF14b8a6)),
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _inProgressTodos.length,
-                itemBuilder: (context, index) {
-                  final todo = _inProgressTodos[index];
+          ),
+          SizedBox(height: 16),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _inProgressTodos.length,
+              itemBuilder: (context, index) {
+                final todo = _inProgressTodos[index];
 
-                  return ListTile(
-                    leading: Checkbox(value: todo.completedAt != null, onChanged: (bool? value) { _toggleCompleteTodo(todo); }),
-                    title: Text(todo.description),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.inbox),
-                      onPressed: () { _toggleInProgress(todo); }
-                    )
-                  );
-                },
-              ),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
+                        width: 1,
+                      ),
+                    ),
+                    child: ListTile(
+                      leading: Checkbox(value: todo.completedAt != null, onChanged: (bool? value) { _toggleCompleteTodo(todo); }),
+                      title: Text(todo.description),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.inbox),
+                        onPressed: () { _toggleInProgress(todo); }
+                      )
+                    ),
+                  ),
+                );
+              },
             ),
-          ],
-        ),
-      );
+          ),
+        ],
+      ),
+    );
   }
 }
