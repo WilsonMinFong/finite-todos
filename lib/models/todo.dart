@@ -7,7 +7,8 @@ class Todo {
 
   // TODO: Make this number configurable
   static const int maxNumInProgress = 4;
-  static const int expireMinutes = 7 * 24 * 60;
+  static const int expireDays = 7;
+  static const int expireMinutes = expireDays * 24 * 60;
 
   Todo({
     this.id,
