@@ -23,8 +23,9 @@ class MyApp extends StatelessWidget {
       title: 'Finite Todos',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        fontFamily: 'Manrope',
       ),
-      home: const HomePage(),
+      home: HomePage(),
     );
   }
 }
